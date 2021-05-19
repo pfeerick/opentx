@@ -835,6 +835,7 @@
 #define TR_ROTARY_ENCODER              "R.Enko"
 #define TR_CHANNELS_MONITOR            "MONITOR KANÁLU"
 #define TR_MIXERS_MONITOR              "MONITOR MIXU"
+#define TR_COMBINED_MONITOR            "COMBINED MONITOR"
 #define TR_PATH_TOO_LONG               "Cesta je moc dlouhá"
 #define TR_VIEW_TEXT                   "Zobrazit text"
 #define TR_FLASH_BOOTLOADER            "Flash bootloaderu"

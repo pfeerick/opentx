@@ -856,6 +856,7 @@
 #define TR_ROTARY_ENCODER      "R.E."
 #define TR_CHANNELS_MONITOR    "MONITOR CANALI"
 #define TR_MIXERS_MONITOR      "MONITOR MIXER"
+#define TR_COMBINED_MONITOR            "COMBINED MONITOR"
 #define TR_PATH_TOO_LONG       "Path troppo lungo"
 #define TR_VIEW_TEXT           "Vedi testo"
 #define TR_FLASH_BOOTLOADER            TR("Prog. bootloader", "Programma bootloader")

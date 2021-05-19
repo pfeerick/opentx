@@ -837,6 +837,7 @@
 #define TR_ROTARY_ENCODER              "Drehgeber"
 #define TR_CHANNELS_MONITOR            "Kanal-Monitor==>"
 #define TR_MIXERS_MONITOR              "==>Mischer Monitor"
+#define TR_COMBINED_MONITOR            "COMBINED MONITOR"
 #define TR_PATH_TOO_LONG               "Pfad zu Lang"
 #define TR_VIEW_TEXT                   "View Text"
 #define TR_FLASH_BOOTLOADER            TR("Flash bootloader","Flash bootloader")      //

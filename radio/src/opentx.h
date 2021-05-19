@@ -1187,6 +1187,12 @@ union ReusableBuffer
   } viewChannels;
 
   struct {
+    bool longNames;
+    uint8_t pageIndex;
+    uint8_t viewMode;
+  } combinedViewChannels;
+
+  struct {
     uint8_t maxNameLen;
   } modelFailsafe;
 

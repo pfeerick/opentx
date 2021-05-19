@@ -842,6 +842,7 @@
 #define TR_ROTARY_ENCODER      "Draaischakelaar"
 #define TR_CHANNELS_MONITOR    "Kanaal-Monitor==>"
 #define TR_MIXERS_MONITOR      "==>MIXERS MONitor"
+#define TR_COMBINED_MONITOR            "COMBINED MONITOR"
 #define TR_PATH_TOO_LONG       "Pad te Lang"
 #define TR_VIEW_TEXT           "Lees Tekst"
 #define TR_FLASH_BOOTLOADER      "Flash bootloader"
