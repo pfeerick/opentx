@@ -987,20 +987,18 @@ bool isThrottleWarningAlertNeeded()
     return false;
   }
 
-  // throttle channel is either the stick according stick mode (already handled in evalInputs)
-  // or P1 to P3;
-  // in case an output channel is choosen as throttle source (thrTraceSrc>NUM_POTS+NUM_SLIDERS) we assume the throttle stick is the input
-  // no other information available at the moment, and good enough to my option (otherwise too much exceptions...)
-  uint8_t thrchn = ((g_model.thrTraceSrc==0) || (g_model.thrTraceSrc>NUM_POTS+NUM_SLIDERS)) ? THR_STICK : g_model.thrTraceSrc+NUM_STICKS-1;
-
   GET_ADC_IF_MIXER_NOT_RUNNING();
-  evalInputs(e_perout_mode_notrainer); // let do evalInputs do the job
+  evalInputs(e_perout_mode_notrainer);
 
-  int16_t v = calibratedAnalogs[thrchn];
-  if (g_model.thrTraceSrc && g_model.throttleReversed) { // TODO : proper review of THR source definition and handling
-    v = -v;
+  if  (g_model.thrTraceSrc>NUM_POTS+NUM_SLIDERS)
+    evalMixes(1);
+
+  int16_t v = getThrottleSourceValue();
+
+  if (g_model.thrTraceSrc && g_model.throttleReversed) {
+    v = 2 * RESX - v;
   }
-  return v > THRCHK_DEADBAND - 1024;
+  return v > THRCHK_DEADBAND;
 }
 
 void checkThrottleStick()
@@ -1447,6 +1445,44 @@ void doMixerCalculations()
   DEBUG_TIMER_STOP(debugTimerEvalMixes);
 }
 
+int16_t getThrottleSourceValue()
+{
+  int16_t val;
+
+  if (g_model.thrTraceSrc > NUM_POTS+NUM_SLIDERS) {
+    uint8_t ch = g_model.thrTraceSrc-NUM_POTS-NUM_SLIDERS-1;
+    val = channelOutputs[ch];
+
+    LimitData * lim = limitAddress(ch);
+    int16_t gModelMax = LIMIT_MAX_RESX(lim);
+    int16_t gModelMin = LIMIT_MIN_RESX(lim);
+
+    if (lim->revert)
+      val = -val + gModelMax;
+    else
+      val = val - gModelMin;
+
+#if defined(PPM_LIMITS_SYMETRICAL)
+    if (lim->symetrical) {
+      val -= calc1000toRESX(lim->offset);
+    }
+#endif
+
+    gModelMax -= gModelMin; // we compare difference between Max and Mix for recaling needed; Max and Min are shifted to 0 by default
+    // usually max is 1024 min is -1024 --> max-min = 2048 full range
+
+    if (gModelMax != 0 && gModelMax != 2048)
+      val = (int32_t) (val << 11) / (gModelMax); // rescaling only needed if Min, Max differs
+
+    if (val < 0)
+      val=0;  // prevent val be negative, which would corrupt throttle trace and timers; could occur if safetyswitch is smaller than limits
+  }
+  else {
+    val = RESX + calibratedAnalogs[g_model.thrTraceSrc == 0 ? THR_STICK : g_model.thrTraceSrc+NUM_STICKS-1];
+  }
+  return val;
+}
+
 void doMixerPeriodicUpdates()
 {
   static tmr10ms_t lastTMR = 0;
@@ -1462,40 +1498,7 @@ void doMixerPeriodicUpdates()
   DEBUG_TIMER_START(debugTimerMixes10ms);
   if (tick10ms) {
     /* Throttle trace */
-    int16_t val;
-
-    if (g_model.thrTraceSrc > NUM_POTS+NUM_SLIDERS) {
-      uint8_t ch = g_model.thrTraceSrc-NUM_POTS-NUM_SLIDERS-1;
-      val = channelOutputs[ch];
-
-      LimitData * lim = limitAddress(ch);
-      int16_t gModelMax = LIMIT_MAX_RESX(lim);
-      int16_t gModelMin = LIMIT_MIN_RESX(lim);
-
-      if (lim->revert)
-        val = -val + gModelMax;
-      else
-        val = val - gModelMin;
-
-#if defined(PPM_LIMITS_SYMETRICAL)
-      if (lim->symetrical) {
-        val -= calc1000toRESX(lim->offset);
-      }
-#endif
-
-      gModelMax -= gModelMin; // we compare difference between Max and Mix for recaling needed; Max and Min are shifted to 0 by default
-      // usually max is 1024 min is -1024 --> max-min = 2048 full range
-
-      if (gModelMax != 0 && gModelMax != 2048)
-        val = (int32_t) (val << 11) / (gModelMax); // rescaling only needed if Min, Max differs
-
-      if (val < 0)
-        val=0;  // prevent val be negative, which would corrupt throttle trace and timers; could occur if safetyswitch is smaller than limits
-    }
-    else {
-      val = RESX + calibratedAnalogs[g_model.thrTraceSrc == 0 ? THR_STICK : g_model.thrTraceSrc+NUM_STICKS-1];
-    }
-
+    int16_t val = getThrottleSourceValue();
     val >>= (RESX_SHIFT-6); // calibrate it (resolution increased by factor 4)
 
     evalTimers(val, tick10ms);

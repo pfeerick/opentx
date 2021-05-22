@@ -613,6 +613,7 @@ void flightReset(uint8_t check=true);
 
 void checkLowEEPROM();
 void checkThrottleStick();
+int16_t getThrottleSourceValue();
 void checkSwitches();
 void checkAlarm();
 void checkAll();
