@@ -741,6 +741,7 @@ void checkBacklight()
 void resetBacklightTimeout()
 {
   lightOffCounter = ((uint16_t)g_eeGeneral.lightAutoOff*250) << 1;
+  flashCounter = 0;
 }
 
 #if MENUS_LOCK == 1
