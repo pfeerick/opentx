@@ -26,14 +26,7 @@
 // Global trigger flag
 RTOS_FLAG_HANDLE mixerFlag;
 
-// Mixer schedule
-struct MixerSchedule {
-
-  // period in us
-  volatile uint16_t period;
-};
-
-static MixerSchedule mixerSchedules[NUM_MODULES];
+MixerSchedule mixerSchedules[NUM_MODULES];
 
 uint16_t getMixerSchedulerPeriod()
 {

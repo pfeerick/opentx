@@ -28,6 +28,13 @@
 
 #if !defined(SIMU)
 
+// Mixer schedule
+struct MixerSchedule {
+
+  // period in us
+  volatile uint16_t period;
+};
+
 // Call once to initialize the mixer scheduler
 void mixerSchedulerInit();
 

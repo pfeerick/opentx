@@ -66,10 +66,13 @@ void stop_intmodule_heartbeat()
   EXTI_Init(&EXTI_InitStructure);
 }
 
+extern MixerSchedule mixerSchedules[NUM_MODULES];
+
 void check_intmodule_heartbeat()
 {
   if (EXTI_GetITStatus(INTMODULE_HEARTBEAT_EXTI_LINE) != RESET) {
-#if defined(INTMODULE_USART)
+    mixerSchedules[INTERNAL_MODULE].period = min<int>(((RTOS_GET_MS() - nextMixerTime[INTERNAL_MODULE]) * 1000) + 1000, PXX2_MAX_HEARTBEAT_PERIOD); // Current + backup
+    #if defined(INTMODULE_USART)
     nextMixerTime[INTERNAL_MODULE] = RTOS_GET_MS();
 #else
     heartbeatCapture.timestamp = getTmr2MHz();
