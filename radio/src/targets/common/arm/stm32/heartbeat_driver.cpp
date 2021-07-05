@@ -71,8 +71,8 @@ extern MixerSchedule mixerSchedules[NUM_MODULES];
 void check_intmodule_heartbeat()
 {
   if (EXTI_GetITStatus(INTMODULE_HEARTBEAT_EXTI_LINE) != RESET) {
-    mixerSchedules[INTERNAL_MODULE].period = limit(4000, (int)((RTOS_GET_MS() - nextMixerTime[INTERNAL_MODULE]) * 1000) + 1000, 8000);
 #if defined(INTMODULE_USART)
+    mixerSchedules[INTERNAL_MODULE].period = limit(4000, (int)((RTOS_GET_MS() - nextMixerTime[INTERNAL_MODULE]) * 1000) + 1000, 8000);
     nextMixerTime[INTERNAL_MODULE] = RTOS_GET_MS();
 #else
     heartbeatCapture.timestamp = getTmr2MHz();
