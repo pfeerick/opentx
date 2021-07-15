@@ -1591,6 +1591,59 @@ static int luaModelResetSensor(lua_State *L)
   return 1;
 }
 
+/*luadoc
+@function model.swashRingData(params)
+
+Set heli swash parameters
+
+@param params (table):
+ * `type` (number) 0=---, 1=120, 2=120X, 3=140, 4=90
+ * `value` (number) swash ring value (normally 0)
+ * 'collectiveSource' (number) source index
+ * 'aileronSource' (number) source index
+ * 'elevatorSource' (number) source index
+ * 'collectiveWeight'(value) -100 to 100
+ * 'aileronWeight' (value) -100 to 100
+ * 'elevatorWeight' (value) -100 to 100
+ * @notice If a parameter is missing, then that parameter remains unchanged.
+
+@status current Introduced in 2.3.15
+*/
+static int luaModelSwashRingData(lua_State *L)
+{
+  luaL_checktype(L, -1, LUA_TTABLE);
+  for (lua_pushnil(L); lua_next(L, -2); lua_pop(L, 1)) {
+    luaL_checktype(L, -2, LUA_TSTRING); // key is string
+    const char * key = luaL_checkstring(L, -2);
+    if (!strcmp(key, "type")) {
+      g_model.swashR.type = luaL_checkinteger(L, -1);
+    }
+    else if (!strcmp(key, "value")) {
+      g_model.swashR.value = luaL_checkinteger(L, -1);
+    }
+    else if (!strcmp(key, "collectiveSource")) {
+      g_model.swashR.collectiveSource = luaL_checkinteger(L, -1);
+    }
+    else if (!strcmp(key, "aileronSource")) {
+      g_model.swashR.aileronSource = luaL_checkinteger(L, -1);
+    }
+    else if (!strcmp(key, "elevatorSource")) {
+      g_model.swashR.elevatorSource = luaL_checkinteger(L, -1);
+    }
+    else if (!strcmp(key, "collectiveWeight")) {
+      g_model.swashR.collectiveWeight = luaL_checkinteger(L, -1);
+    }
+    else if (!strcmp(key, "aileronWeight")) {
+      g_model.swashR.aileronWeight = luaL_checkinteger(L, -1);
+    }
+    else if (!strcmp(key, "elevatorWeight")) {
+      g_model.swashR.elevatorWeight = luaL_checkinteger(L, -1);
+    }
+  }
+  storageDirty(EE_MODEL);
+  return 0;
+}
+
 const luaL_Reg modelLib[] = {
   { "getInfo", luaModelGetInfo },
   { "setInfo", luaModelSetInfo },
@@ -1625,5 +1678,6 @@ const luaL_Reg modelLib[] = {
   { "setGlobalVariable", luaModelSetGlobalVariable },
   { "getSensor", luaModelGetSensor },
   { "resetSensor", luaModelResetSensor },
+  { "swashRingData", luaModelSwashRingData },
   { NULL, NULL }  /* sentinel */
 };
