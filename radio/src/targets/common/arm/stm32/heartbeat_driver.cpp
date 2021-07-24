@@ -44,7 +44,7 @@ void init_intmodule_heartbeat()
   EXTI_InitStructure.EXTI_LineCmd = ENABLE;
   EXTI_Init(&EXTI_InitStructure);
 
-  NVIC_SetPriority(INTMODULE_HEARTBEAT_EXTI_IRQn, 0); // Highest priority interrupt
+  NVIC_SetPriority(INTMODULE_HEARTBEAT_EXTI_IRQn, INTMODULE_HEARTBEAT_EXTI_IRQn_PRIO); // Highest priority interrupt
   NVIC_EnableIRQ(INTMODULE_HEARTBEAT_EXTI_IRQn);
   heartbeatCapture.valid = true;
 }

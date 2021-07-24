@@ -85,7 +85,7 @@ void auxSerialSetup(unsigned int baudrate, bool dma, uint16_t length, uint16_t p
     USART_Cmd(AUX_SERIAL_USART, ENABLE);
     USART_ITConfig(AUX_SERIAL_USART, USART_IT_RXNE, ENABLE);
     USART_ITConfig(AUX_SERIAL_USART, USART_IT_TXE, DISABLE);
-    NVIC_SetPriority(AUX_SERIAL_USART_IRQn, 7);
+    NVIC_SetPriority(AUX_SERIAL_USART_IRQn, AUX_SERIAL_USART_IRQn_PRIO);
     NVIC_EnableIRQ(AUX_SERIAL_USART_IRQn);
   }
 }
@@ -281,7 +281,7 @@ void aux2SerialSetup(unsigned int baudrate, bool dma, uint16_t length, uint16_t 
     USART_Cmd(AUX2_SERIAL_USART, ENABLE);
     USART_ITConfig(AUX2_SERIAL_USART, USART_IT_RXNE, ENABLE);
     USART_ITConfig(AUX2_SERIAL_USART, USART_IT_TXE, DISABLE);
-    NVIC_SetPriority(AUX2_SERIAL_USART_IRQn, 7);
+    NVIC_SetPriority(AUX2_SERIAL_USART_IRQn, AUX2_SERIAL_USART_IRQn_PRIO);
     NVIC_EnableIRQ(AUX2_SERIAL_USART_IRQn);
   }
 }

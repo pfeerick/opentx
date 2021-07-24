@@ -83,9 +83,9 @@ void dacInit()
   DAC->SR = DAC_SR_DMAUDR1 ;              // Write 1 to clear flag
   DAC->CR = DAC_CR_TEN1 | DAC_CR_EN1 ;                    // Enable DAC
   NVIC_EnableIRQ(AUDIO_TIM_IRQn); // TODO needed?
-  NVIC_SetPriority(AUDIO_TIM_IRQn, 7);
+  NVIC_SetPriority(AUDIO_TIM_IRQn, AUDIO_TIM_IRQn_PRIO);
   NVIC_EnableIRQ(AUDIO_DMA_Stream_IRQn);
-  NVIC_SetPriority(AUDIO_DMA_Stream_IRQn, 7);
+  NVIC_SetPriority(AUDIO_DMA_Stream_IRQn, AUDIO_DMA_Stream_IRQn_PRIO);
 }
 
 #if defined(AUDIO_MUTE_GPIO_PIN)

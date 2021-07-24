@@ -151,7 +151,7 @@ void initTimerTopLcd()
   TIM12->EGR = 0;
   TIM12->CR1 = 5;
   // TIM12->DIER |= 1;
-  NVIC_SetPriority(TIM8_BRK_TIM12_IRQn, 2 );
+  NVIC_SetPriority(TIM8_BRK_TIM12_IRQn, TIM8_BRK_TIM12_IRQn_PRIO);
   NVIC_EnableIRQ(TIM8_BRK_TIM12_IRQn);
 }
 

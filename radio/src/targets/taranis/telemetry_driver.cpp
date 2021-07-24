@@ -81,7 +81,7 @@ void telemetryPortInit(uint32_t baudrate, uint8_t mode)
   USART_Cmd(TELEMETRY_USART, ENABLE);
 
   USART_ITConfig(TELEMETRY_USART, USART_IT_RXNE, ENABLE);
-  NVIC_SetPriority(TELEMETRY_USART_IRQn, 6);
+  NVIC_SetPriority(TELEMETRY_USART_IRQn, TELEMETRY_USART_IRQn_PRIO);
   NVIC_EnableIRQ(TELEMETRY_USART_IRQn);
 }
 
@@ -137,7 +137,7 @@ void telemetryPortInvertedInit(uint32_t baudrate)
   TELEMETRY_TIMER->CR1 = TIM_CR1_CEN;
   TELEMETRY_TIMER->DIER = TIM_DIER_UIE;
 
-  NVIC_SetPriority(TELEMETRY_TIMER_IRQn, 0);
+  NVIC_SetPriority(TELEMETRY_TIMER_IRQn, TELEMETRY_TIMER_IRQn_PRIO);
   NVIC_EnableIRQ(TELEMETRY_TIMER_IRQn);
 
   // init TELEMETRY_RX_GPIO_PIN
@@ -166,7 +166,7 @@ void telemetryPortInvertedInit(uint32_t baudrate)
   //TODO:
   // - handle conflict with HEARTBEAT disabled for trainer input...
   // - probably need to stop trainer input/output and restore after this is closed
-  NVIC_SetPriority(TELEMETRY_EXTI_IRQn, 0);
+  NVIC_SetPriority(TELEMETRY_EXTI_IRQn, TELEMETRY_EXTI_IRQn_PRIO);
 
   // In case shared IRQ is not enabled
   if ((NVIC->ISER[(uint32_t)((int32_t)TELEMETRY_EXTI_IRQn) >> 5] & (uint32_t)(1 << ((uint32_t)((int32_t)TELEMETRY_EXTI_IRQn) & (uint32_t)0x1F))) == 0) {
@@ -301,7 +301,7 @@ void sportSendBuffer(const uint8_t * buffer, uint32_t count)
 
   // enable interrupt and set it's priority
   NVIC_EnableIRQ(TELEMETRY_DMA_TX_Stream_IRQ) ;
-  NVIC_SetPriority(TELEMETRY_DMA_TX_Stream_IRQ, 7);
+  NVIC_SetPriority(TELEMETRY_DMA_TX_Stream_IRQ, TELEMETRY_DMA_TX_Stream_IRQ_PRIO);
 }
 
 extern "C" void TELEMETRY_DMA_TX_IRQHandler(void)

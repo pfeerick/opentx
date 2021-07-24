@@ -95,7 +95,7 @@ void telemetryPortInit(uint32_t baudrate, uint8_t mode)
   if (mode & TELEMETRY_SERIAL_WITHOUT_DMA) {
     USART_Cmd(TELEMETRY_USART, ENABLE);
     USART_ITConfig(TELEMETRY_USART, USART_IT_RXNE, ENABLE);
-    NVIC_SetPriority(TELEMETRY_USART_IRQn, 6);
+    NVIC_SetPriority(TELEMETRY_USART_IRQn, TELEMETRY_USART_IRQn_PRIO);
     NVIC_EnableIRQ(TELEMETRY_USART_IRQn);
   }
   else {
@@ -104,7 +104,7 @@ void telemetryPortInit(uint32_t baudrate, uint8_t mode)
   
     USART_ITConfig(TELEMETRY_USART, USART_IT_RXNE, DISABLE);
     USART_ITConfig(TELEMETRY_USART, USART_IT_TXE, DISABLE);
-    NVIC_SetPriority(TELEMETRY_USART_IRQn, 6);
+    NVIC_SetPriority(TELEMETRY_USART_IRQn, TELEMETRY_USART_IRQn_PRIO);
     NVIC_EnableIRQ(TELEMETRY_USART_IRQn);
   
     DMA_InitStructure.DMA_Channel = TELEMETRY_DMA_Channel_RX;
@@ -130,7 +130,7 @@ void telemetryPortInit(uint32_t baudrate, uint8_t mode)
 #else
   USART_Cmd(TELEMETRY_USART, ENABLE);
   USART_ITConfig(TELEMETRY_USART, USART_IT_RXNE, ENABLE);
-  NVIC_SetPriority(TELEMETRY_USART_IRQn, 6);
+  NVIC_SetPriority(TELEMETRY_USART_IRQn, TELEMETRY_USART_IRQn_PRIO);
   NVIC_EnableIRQ(TELEMETRY_USART_IRQn);
 #endif
 }
@@ -181,7 +181,7 @@ void telemetryPortInvertedInit(uint32_t baudrate)
   TELEMETRY_TIMER->CR1 = TIM_CR1_CEN;
   TELEMETRY_TIMER->DIER = TIM_DIER_UIE;
 
-  NVIC_SetPriority(TELEMETRY_TIMER_IRQn, 0);
+  NVIC_SetPriority(TELEMETRY_TIMER_IRQn, TELEMETRY_TIMER_IRQn_PRIO);
   NVIC_EnableIRQ(TELEMETRY_TIMER_IRQn);
 
   // init TELEMETRY_RX_GPIO_PIN
@@ -207,7 +207,7 @@ void telemetryPortInvertedInit(uint32_t baudrate)
   EXTI_InitStructure.EXTI_LineCmd = ENABLE;
   EXTI_Init(&EXTI_InitStructure);
 
-  NVIC_SetPriority(TELEMETRY_EXTI_IRQn, 0);
+  NVIC_SetPriority(TELEMETRY_EXTI_IRQn, TELEMETRY_EXTI_IRQn_PRIO);
   NVIC_EnableIRQ(TELEMETRY_EXTI_IRQn);
 }
 
@@ -331,7 +331,7 @@ void sportSendBuffer(const uint8_t * buffer, uint32_t count)
 
   // enable interrupt and set it's priority
   NVIC_EnableIRQ(TELEMETRY_DMA_TX_Stream_IRQ) ;
-  NVIC_SetPriority(TELEMETRY_DMA_TX_Stream_IRQ, 7);
+  NVIC_SetPriority(TELEMETRY_DMA_TX_Stream_IRQ, TELEMETRY_DMA_TX_Stream_IRQ_PRIO);
 }
 
 extern "C" void TELEMETRY_DMA_TX_IRQHandler(void)

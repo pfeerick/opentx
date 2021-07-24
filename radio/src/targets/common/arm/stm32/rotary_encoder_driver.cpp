@@ -66,7 +66,7 @@ void rotaryEncoderInit()
 #endif
 
   NVIC_EnableIRQ(ROTARY_ENCODER_TIMER_IRQn);
-  NVIC_SetPriority(ROTARY_ENCODER_TIMER_IRQn, 7);
+  NVIC_SetPriority(ROTARY_ENCODER_TIMER_IRQn, ROTARY_ENCODER_TIMER_IRQn_PRIO);
 }
 
 void rotaryEncoderCheck()

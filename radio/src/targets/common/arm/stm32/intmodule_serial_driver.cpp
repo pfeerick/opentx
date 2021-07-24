@@ -92,7 +92,7 @@ void intmoduleSerialStart(uint32_t baudrate, uint8_t rxEnable, uint16_t parity, 
   if (rxEnable) {
     intmoduleFifo.clear();
     USART_ITConfig(INTMODULE_USART, USART_IT_RXNE, ENABLE);
-    NVIC_SetPriority(INTMODULE_USART_IRQn, 6);
+    NVIC_SetPriority(INTMODULE_USART_IRQn, INTMODULE_USART_IRQn_PRIO);
     NVIC_EnableIRQ(INTMODULE_USART_IRQn);
   }
 }

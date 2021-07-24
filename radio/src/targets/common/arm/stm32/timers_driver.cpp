@@ -40,7 +40,7 @@ void init5msTimer()
   INTERRUPT_xMS_TIMER->CR1 = TIM_CR1_CEN | TIM_CR1_URS;
   INTERRUPT_xMS_TIMER->DIER |= TIM_DIER_UIE;
   NVIC_EnableIRQ(INTERRUPT_xMS_IRQn);
-  NVIC_SetPriority(INTERRUPT_xMS_IRQn, 7);
+  NVIC_SetPriority(INTERRUPT_xMS_IRQn, INTERRUPT_xMS_IRQn_PRIO);
 }
 
 void stop5msTimer()

@@ -88,7 +88,7 @@ void bluetoothInit(uint32_t baudrate, bool enable)
   USART_Cmd(BT_USART, ENABLE);
 
   USART_ITConfig(BT_USART, USART_IT_RXNE, ENABLE);
-  NVIC_SetPriority(BT_USART_IRQn, 6);
+  NVIC_SetPriority(BT_USART_IRQn, BT_USART_IRQn_PRIO);
   NVIC_EnableIRQ(BT_USART_IRQn);
 
   bluetoothWriteState = BLUETOOTH_WRITE_IDLE;

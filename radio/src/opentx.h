@@ -26,6 +26,7 @@
 #include "debounce.h"
 #include "globals.h"
 #include "opentx_helpers.h"
+#include "priorities.h"
 
 #if defined(SIMU)
 #include "targets/simu/simpgmspace.h"

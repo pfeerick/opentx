@@ -57,11 +57,11 @@ void init_trainer_ppm()
 
 #if defined(TRAINER_DMA_STREAM)
   NVIC_EnableIRQ(TRAINER_DMA_IRQn);
-  NVIC_SetPriority(TRAINER_DMA_IRQn, 7);
+  NVIC_SetPriority(TRAINER_DMA_IRQn, TRAINER_DMA_IRQn_PRIO);
 #endif
 
   NVIC_EnableIRQ(TRAINER_TIMER_IRQn);
-  NVIC_SetPriority(TRAINER_TIMER_IRQn, 7);
+  NVIC_SetPriority(TRAINER_TIMER_IRQn, TRAINER_TIMER_IRQn_PRIO);
 }
 
 void stop_trainer_ppm()
@@ -102,7 +102,7 @@ void init_trainer_capture()
   TRAINER_TIMER->CR1 = TIM_CR1_CEN;
 
   NVIC_EnableIRQ(TRAINER_TIMER_IRQn);
-  NVIC_SetPriority(TRAINER_TIMER_IRQn, 7);
+  NVIC_SetPriority(TRAINER_TIMER_IRQn, TRAINER_TIMER_IRQn_PRIO);
 }
 
 void stop_trainer_capture()
@@ -250,7 +250,7 @@ void init_trainer_module_cppm()
   TRAINER_MODULE_CPPM_TIMER->DIER |= TRAINER_MODULE_CPPM_INTERRUPT_ENABLE;
   TRAINER_MODULE_CPPM_TIMER->CR1 = TIM_CR1_CEN;
 
-  NVIC_SetPriority(TRAINER_MODULE_CPPM_TIMER_IRQn, 7);
+  NVIC_SetPriority(TRAINER_MODULE_CPPM_TIMER_IRQn, TRAINER_MODULE_CPPM_TIMER_IRQn_PRIO);
   NVIC_EnableIRQ(TRAINER_MODULE_CPPM_TIMER_IRQn);
 }
 

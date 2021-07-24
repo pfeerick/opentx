@@ -50,9 +50,9 @@ void init_trainer_ppm()
   trainerSendNextFrame();
 
   NVIC_EnableIRQ(TRAINER_DMA_IRQn);
-  NVIC_SetPriority(TRAINER_DMA_IRQn, 7);
+  NVIC_SetPriority(TRAINER_DMA_IRQn, TRAINER_DMA_IRQn_PRIO);
   NVIC_EnableIRQ(TRAINER_TIMER_IRQn);
-  NVIC_SetPriority(TRAINER_TIMER_IRQn, 7);
+  NVIC_SetPriority(TRAINER_TIMER_IRQn, TRAINER_TIMER_IRQn_PRIO);
 }
 
 void stop_trainer_ppm()
@@ -87,7 +87,7 @@ void init_trainer_capture()
   TRAINER_TIMER->CR1 = TIM_CR1_CEN;
 
   NVIC_EnableIRQ(TRAINER_TIMER_IRQn);
-  NVIC_SetPriority(TRAINER_TIMER_IRQn, 7);
+  NVIC_SetPriority(TRAINER_TIMER_IRQn, TRAINER_TIMER_IRQn_PRIO);
 }
 
 void stop_trainer_capture()

@@ -75,7 +75,7 @@ void USB_OTG_BSP_Deinit(USB_OTG_CORE_HANDLE *pdev)
 */
 void USB_OTG_BSP_EnableInterrupt(USB_OTG_CORE_HANDLE *pdev)
 {
-  NVIC_SetPriority(OTG_FS_IRQn, 11); // Lower priority interrupt
+  NVIC_SetPriority(OTG_FS_IRQn, OTG_FS_IRQn_PRIO); // Lower priority interrupt
   NVIC_EnableIRQ(OTG_FS_IRQn);
 }
 
