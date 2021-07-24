@@ -150,6 +150,7 @@ TASK_FUNCTION(mixerTask)
       }
     }
 
+    AUX2_SERIAL_POWER_ON();
 #if defined(DEBUG_MIXER_SCHEDULER)
     GPIO_SetBits(EXTMODULE_TX_GPIO, EXTMODULE_TX_GPIO_PIN);
     GPIO_ResetBits(EXTMODULE_TX_GPIO, EXTMODULE_TX_GPIO_PIN);
@@ -215,6 +216,8 @@ TASK_FUNCTION(mixerTask)
       t0 = getTmr2MHz() - t0;
       if (t0 > maxMixerDuration)
         maxMixerDuration = t0;
+
+      AUX2_SERIAL_POWER_OFF();
 
       // TODO:
       // - check the cause of timeouts when switching

@@ -20,12 +20,11 @@
 
 #pragma once
 
-#define INTMODULE_HEARTBEAT_EXTI_IRQn_PRIO          0
-#define TELEMETRY_TIMER_IRQn_PRIO                   0
-#define TELEMETRY_EXTI_IRQn_PRIO                    0
+#define MIXER_SCHEDULER_TIMER_IRQn_PRIO             2
 
-#define TIM8_BRK_TIM12_IRQn                         2
-
+#define INTMODULE_HEARTBEAT_EXTI_IRQn_PRIO          3
+#define TELEMETRY_TIMER_IRQn_PRIO                   3
+#define TIM8_BRK_TIM12_IRQn_PRIO                    3
 #define PWM_IRQn_PRIO                               3
 
 #define BT_USART_IRQn_PRIO                          6
@@ -51,8 +50,6 @@
 #define TRAINER_DMA_IRQn_PRIO                       7
 #define TRAINER_TIMER_IRQn_PRIO                     7
 
-#define MIXER_SCHEDULER_TIMER_IRQn_PRIO             8
-
-#define PWM_IRQn_PRIO                               10
+#define PWM_IRQn_STICK_PRIO                         10
 
 #define OTG_FS_IRQn_PRIO                            11

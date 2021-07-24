@@ -48,7 +48,7 @@ void sticksPwmInit()
   PWM_TIMER->CR1 = TIM_CR1_CEN; // Start timer
 
   NVIC_EnableIRQ(PWM_IRQn);
-  NVIC_SetPriority(PWM_IRQn, PWM_IRQn_PRIO);
+  NVIC_SetPriority(PWM_IRQn, PWM_IRQn_STICK_PRIO);
 }
 
 inline uint32_t TIM_GetCapture_Stick(uint8_t n)

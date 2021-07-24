@@ -23,6 +23,7 @@
 #include "usb_bsp.h"
 #include "board.h"
 #include "usbd_conf.h"
+#include "priorities.h"
 
 extern uint32_t SystemCoreClock;
 

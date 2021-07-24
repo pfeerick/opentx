@@ -78,7 +78,7 @@ void init_main_ppm(uint32_t period, uint32_t out_enable)
 
   setExternalModulePolarity();
 
-  NVIC_SetPriority(PWM_IRQn, 3);
+  NVIC_SetPriority(PWM_IRQn, PWM_IRQn_PRIO);
   NVIC_EnableIRQ(PWM_IRQn);
 }
 
